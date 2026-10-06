@@ -2,27 +2,28 @@ package com.example.foroom.steps
 
 import com.example.foroom.pages.LoginPage
 
-object LoginSteps {
+class LoginSteps {
+    private val loginPage = LoginPage()
 
     fun assertLoginScreenDisplayed() {
-        LoginPage.waitUntilDisplayed()
+        loginPage.waitUntilDisplayed()
     }
 
     fun logIn(userName: String, password: String) {
-        LoginPage.enterUserName(userName)
-        LoginPage.enterPassword(password)
-        LoginPage.tapLogIn()
+        loginPage.enterUserName(userName)
+        loginPage.enterPassword(password)
+        loginPage.tapLogIn()
     }
 
     fun openRegistration() {
-        LoginPage.tapSignUp()
+        loginPage.tapSignUp()
     }
 
     fun assertUserNameErrorDisplayed() {
-        LoginPage.waitForUserNameError()
+        loginPage.waitForUserNameError()
     }
 
     fun assertPasswordErrorDisplayed() {
-        LoginPage.waitForPasswordError()
+        loginPage.waitForPasswordError()
     }
 }

@@ -7,7 +7,6 @@ import com.alternator.foroom.R
 import com.example.foroom.Helper.waitUntilDisplayed
 import org.hamcrest.Matcher
 
-/** The Change Language bottom sheet opened from the profile page. */
 class ChangeLanguagePage {
     private val georgianButton: Matcher<View> = withId(R.id.languageButtonGeo)
     private val englishButton: Matcher<View> = withId(R.id.languageButtonEng)
@@ -16,7 +15,6 @@ class ChangeLanguagePage {
         georgianButton.waitUntilDisplayed()
         englishButton.waitUntilDisplayed()
     }
-
     fun tapGeorgian() {
         georgianButton.waitUntilDisplayed().perform(click())
     }

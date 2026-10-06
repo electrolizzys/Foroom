@@ -6,7 +6,6 @@ import com.example.foroom.pages.CreateChatPage
 class ChatSteps {
     private val chatsPage = ChatsPage()
     private val createChatPage = CreateChatPage()
-
     fun assertHomeScreenDisplayed() {
         chatsPage.waitForHomeScreen()
     }

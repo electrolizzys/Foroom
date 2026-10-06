@@ -9,7 +9,6 @@ class ProfileSteps {
     private val changePasswordPage = ChangePasswordPage()
     private val changeLanguagePage = ChangeLanguagePage()
 
-    /** Profile labels used to confirm which language the app is showing. */
     enum class Language(val changeLanguageLabel: String, val signOutLabel: String) {
         GEORGIAN("ენის შეცვლა", "გამოსვლა"),
         ENGLISH("Change Language", "Sign Out")
@@ -19,8 +18,6 @@ class ProfileSteps {
         profilePage.open()
         profilePage.waitUntilDisplayed()
     }
-
-    /** Changing the password signs the user out, so this ends on the login screen. */
     fun changePassword(newPassword: String) {
         profilePage.tapChangePassword()
         changePasswordPage.waitUntilDisplayed()

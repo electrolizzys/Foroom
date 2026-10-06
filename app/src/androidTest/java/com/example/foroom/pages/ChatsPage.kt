@@ -16,20 +16,14 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import com.example.design_system.R as DesignR
 
-/** The home chat list, plus the chat screen opened from it. */
 class ChatsPage {
-    // Home screen
     private val navBar: Matcher<View> = withId(R.id.navBar)
     private val homeContainer: Matcher<View> = withId(R.id.homeContainer)
-
-    // Chat list
     private val chatsRecyclerView: Matcher<View> = withId(R.id.chatsRecyclerView)
     private val searchChatInput: Matcher<View> = withId(R.id.searchChatInput)
     private val searchEditText: Matcher<View> =
         allOf(withId(DesignR.id.inputEditText), isDescendantOfA(searchChatInput))
 
-    // Opened chat. The create-chat screen also has chatHeaderView and closeButton,
-    // so both are scoped to the chat screen through its messagesRecyclerView sibling.
     private val messagesRecyclerView: Matcher<View> = withId(R.id.messagesRecyclerView)
     private val openedChatHeader: Matcher<View> =
         allOf(withId(R.id.chatHeaderView), hasSibling(messagesRecyclerView))
@@ -47,7 +41,6 @@ class ChatsPage {
         chatsRecyclerView.waitUntilDisplayed()
         searchChatInput.waitUntilDisplayed()
     }
-
     fun search(text: String) {
         searchEditText.waitUntilDisplayed().perform(replaceText(text), closeSoftKeyboard())
     }

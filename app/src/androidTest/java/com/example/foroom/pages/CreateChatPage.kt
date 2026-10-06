@@ -19,7 +19,6 @@ import com.example.design_system.R as DesignR
 
 class CreateChatPage {
     private val createChatNavigationButton: Matcher<View> = withId(R.id.homeNavigationCreateChat)
-
     private val chatNameInput: Matcher<View> = withId(R.id.chatNameInput)
     private val chatNameEditText: Matcher<View> =
         allOf(withId(DesignR.id.inputEditText), isDescendantOfA(chatNameInput))

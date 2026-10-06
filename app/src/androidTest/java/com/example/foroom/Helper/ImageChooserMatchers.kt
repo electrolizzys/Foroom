@@ -9,7 +9,6 @@ import com.example.shared.model.Image
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 
-/** While loading, an ImageChooserListView shows blank placeholder images and ignores taps. */
 fun imagesLoaded(): Matcher<View> =
     object : BoundedMatcher<View, ImageChooserListView>(ImageChooserListView::class.java) {
         override fun describeTo(description: Description) {
@@ -20,21 +19,15 @@ fun imagesLoaded(): Matcher<View> =
             item.isChoosingEnabled && item.images.isNotEmpty() &&
                 item.images.none { image -> image.id == Image.BLANK_IMAGE_ID }
     }
-
 fun imageSelectedAt(index: Int): Matcher<View> =
     object : BoundedMatcher<View, ImageChooserListView>(ImageChooserListView::class.java) {
         override fun describeTo(description: Description) {
             description.appendText("image chooser with selected index $index")
         }
-
         override fun matchesSafely(item: ImageChooserListView): Boolean =
             item.selectedIndex == index
     }
 
-/**
- * Stateless "n-th image" matcher inside the chooser with [chooserId]. Helper.withIndex keeps
- * a counter between traversals, which breaks when the same matcher is polled and then clicked.
- */
 fun imageAt(chooserId: Int, index: Int): Matcher<View> =
     object : BoundedMatcher<View, ImageChooserItemView>(ImageChooserItemView::class.java) {
         override fun describeTo(description: Description) {

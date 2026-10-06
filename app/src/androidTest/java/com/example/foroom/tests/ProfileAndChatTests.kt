@@ -20,10 +20,6 @@ import org.koin.core.context.GlobalContext
 @RunWith(AndroidJUnit4::class)
 class ProfileAndChatTests {
 
-    /**
-     * A test that ends logged in would make the next launch skip the login screen.
-     * Clearing the saved session before every launch keeps tests order-independent.
-     */
     private val clearSessionRule = object : ExternalResource() {
         override fun before() {
             runBlocking { GlobalContext.get().get<ForoomUserDataStore>().clearUserData() }
@@ -46,8 +42,6 @@ class ProfileAndChatTests {
         loginSteps.assertLoginScreenDisplayed()
 
         logInToHome(TestData.NEW_PASSWORD)
-
-        // Cleanup: restore the known password so the test can run again.
         profileSteps.openProfile()
         profileSteps.changePassword(TestData.password)
         loginSteps.assertLoginScreenDisplayed()
@@ -60,10 +54,8 @@ class ProfileAndChatTests {
 
         profileSteps.selectLanguage(Language.GEORGIAN)
         profileSteps.assertProfileShownIn(Language.GEORGIAN)
-
         profileSteps.selectLanguage(Language.ENGLISH)
         profileSteps.assertProfileShownIn(Language.ENGLISH)
-
         profileSteps.selectLanguage(Language.GEORGIAN)
         profileSteps.assertProfileShownIn(Language.GEORGIAN)
     }
@@ -75,7 +67,6 @@ class ProfileAndChatTests {
         logInToHome(TestData.password)
         chatSteps.createChat(chatName, TestData.CHAT_IMAGE_INDEX)
         chatSteps.assertChatOpened(chatName)
-
         chatSteps.closeChat()
         chatSteps.searchChat(chatName)
         chatSteps.assertChatInList(chatName)
@@ -88,10 +79,6 @@ class ProfileAndChatTests {
     }
 
     private object TestData {
-        /**
-         * Dedicated account registered in Foroom Training on the test device.
-         * Override with `-e profileUsername <name> -e profilePassword <password>`.
-         */
         private const val DEFAULT_USER_NAME = "lizi_test"
         private const val DEFAULT_PASSWORD = "Lizi123!"
 

@@ -5,14 +5,16 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import com.example.foroom.constants.Timeouts
 import org.hamcrest.Matcher
 
-const val DEFAULT_WAIT_TIMEOUT_MS = 10_000L
-private const val POLL_INTERVAL_MS = 100L
-
+/**
+ * Polls until the view matching this matcher satisfies [condition], so asynchronous work
+ * does not need fixed sleeps. Rethrows the last Espresso failure on timeout.
+ */
 fun Matcher<View>.waitUntil(
     condition: Matcher<View>,
-    timeoutMs: Long = DEFAULT_WAIT_TIMEOUT_MS
+    timeoutMs: Long = Timeouts.DEFAULT_MS
 ): ViewInteraction {
     val interaction = onView(this)
     val endTime = System.currentTimeMillis() + timeoutMs
@@ -21,11 +23,19 @@ fun Matcher<View>.waitUntil(
             return interaction.check(ViewAssertions.matches(condition))
         } catch (error: Throwable) {
             if (System.currentTimeMillis() >= endTime) throw error
-            Thread.sleep(POLL_INTERVAL_MS)
+            Thread.sleep(Timeouts.POLL_INTERVAL_MS)
         }
     }
 }
 
-
-fun Matcher<View>.waitUntilDisplayed(timeoutMs: Long = DEFAULT_WAIT_TIMEOUT_MS): ViewInteraction =
+fun Matcher<View>.waitUntilDisplayed(timeoutMs: Long = Timeouts.DEFAULT_MS): ViewInteraction =
     waitUntil(isDisplayed(), timeoutMs)
+
+/** One immediate check without waiting; used where the caller does its own bounded retries. */
+fun Matcher<View>.isDisplayedNow(): Boolean =
+    try {
+        onView(this).check(ViewAssertions.matches(isDisplayed()))
+        true
+    } catch (_: Throwable) {
+        false
+    }

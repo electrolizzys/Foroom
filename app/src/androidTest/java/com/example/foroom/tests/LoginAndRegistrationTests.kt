@@ -25,34 +25,37 @@ class LoginAndRegistrationTests {
     }
     private val activityRule = ActivityScenarioRule(ForoomActivity::class.java)
 
+    private val loginSteps = LoginSteps()
+    private val registrationSteps = RegistrationSteps()
+
     @get:Rule
     val rules: RuleChain = RuleChain.outerRule(clearSessionRule).around(activityRule)
 
     @Test
     fun validUserNameAndInvalidPasswordShowsPasswordError() {
-        LoginSteps.assertLoginScreenDisplayed()
-        LoginSteps.logIn(TestData.existingUserName, TestData.WRONG_PASSWORD)
-        LoginSteps.assertPasswordErrorDisplayed()
+        loginSteps.assertLoginScreenDisplayed()
+        loginSteps.logIn(TestData.existingUserName, TestData.WRONG_PASSWORD)
+        loginSteps.assertPasswordErrorDisplayed()
     }
     @Test
     fun invalidUserNameAndInvalidPasswordShowsUserNameAndPasswordErrors() {
-        LoginSteps.assertLoginScreenDisplayed()
-        LoginSteps.logIn(TestData.nonExistingUserName(), TestData.WRONG_PASSWORD)
-        LoginSteps.assertUserNameErrorDisplayed()
-        LoginSteps.assertPasswordErrorDisplayed()
+        loginSteps.assertLoginScreenDisplayed()
+        loginSteps.logIn(TestData.nonExistingUserName(), TestData.WRONG_PASSWORD)
+        loginSteps.assertUserNameErrorDisplayed()
+        loginSteps.assertPasswordErrorDisplayed()
     }
 
     @Test
     fun registrationWithValidDataOpensHomeScreen() {
-        LoginSteps.assertLoginScreenDisplayed()
-        LoginSteps.openRegistration()
-        RegistrationSteps.assertRegistrationScreenDisplayed()
-        RegistrationSteps.register(
+        loginSteps.assertLoginScreenDisplayed()
+        loginSteps.openRegistration()
+        registrationSteps.assertRegistrationScreenDisplayed()
+        registrationSteps.register(
             userName = TestData.uniqueUserName(),
             password = TestData.VALID_PASSWORD,
             avatarIndex = TestData.AVATAR_INDEX
         )
-        RegistrationSteps.assertRegistrationSucceeded()
+        registrationSteps.assertRegistrationSucceeded()
     }
 
     private object TestData {

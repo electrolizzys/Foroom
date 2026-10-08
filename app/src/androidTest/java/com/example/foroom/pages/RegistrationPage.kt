@@ -21,9 +21,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import com.example.design_system.R as DesignR
 
-object RegistrationPage {
-    private const val AVATAR_LOAD_TIMEOUT_MS = 15_000L
-
+class RegistrationPage {
     private val userNameInput: Matcher<View> = withId(R.id.userNameInput)
     private val passwordInput: Matcher<View> = withId(R.id.passwordInput)
     private val repeatPasswordInput: Matcher<View> = withId(R.id.repeatPasswordInput)
@@ -109,4 +107,8 @@ object RegistrationPage {
             override fun matchesSafely(item: ImageChooserListView): Boolean =
                 item.selectedIndex == index
         }
+
+    companion object {
+        private const val AVATAR_LOAD_TIMEOUT_MS = 15_000L
+    }
 }

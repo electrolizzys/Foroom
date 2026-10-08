@@ -18,7 +18,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import com.example.design_system.R as DesignR
 
-object LoginPage {
+class LoginPage {
     private val userNameInput: Matcher<View> = withId(R.id.userNameInput)
     private val passwordInput: Matcher<View> = withId(R.id.passwordInput)
     private val userNameEditText = childOf(userNameInput, DesignR.id.inputEditText)

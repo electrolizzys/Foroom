@@ -6,8 +6,8 @@ Build: `app` module, `debug` variant (installed as **Foroom Training**)
 | # | Device / AVD | Type | Android | API | Screen resolution | Scenario 1 — johnWeek message survives reopening | Scenario 2 — question in own chat | Scenario 3 — two accounts, swipe to older greeting |
 |---|---|---|---|---|---|---|---|---|
 | 1 | Pixel_7_Pro | Emulator | 13 | 33 | 1440 × 3120 | ✅ Pass | ✅ Pass | ✅ Pass |
-| 2 | _not run yet_ | Emulator | 14 | 34 | | | | |
-| 3 | _not run yet_ | Emulator | 15 | 35 | | | | |
+| 2 | Pixel_6 | Emulator | 14 | 34 | 1080 × 2400 | ✅ Pass | ✅ Pass | ✅ Pass |
+| 3 | Pixel_4a | Emulator | 15 | 35 | 1080 × 2340 | ✅ Pass | ✅ Pass | ✅ Pass |
 
 ## How each configuration was checked
 

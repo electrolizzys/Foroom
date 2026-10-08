@@ -1,67 +1,30 @@
 package com.example.foroom.pages
 
 import android.view.View
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
-import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.matcher.ViewMatchers.hasSibling
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.alternator.foroom.R
-import com.example.foroom.Helper.waitUntil
-import com.example.foroom.Helper.waitUntilDisplayed
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.not
 import com.example.design_system.R as DesignR
 
 class LoginPage {
-    private val userNameInput: Matcher<View> = withId(R.id.userNameInput)
-    private val passwordInput: Matcher<View> = withId(R.id.passwordInput)
-    private val userNameEditText = childOf(userNameInput, DesignR.id.inputEditText)
-    private val passwordEditText = childOf(passwordInput, DesignR.id.inputEditText)
-    private val userNameDescription = childOf(userNameInput, DesignR.id.descriptionTextView)
-    private val passwordDescription = childOf(passwordInput, DesignR.id.descriptionTextView)
+    val userNameInput: Matcher<View> = withId(R.id.userNameInput)
+    val passwordInput: Matcher<View> = withId(R.id.passwordInput)
 
-    private val logInButton: Matcher<View> = withId(R.id.logInButton)
-    private val signUpButton: Matcher<View> =
-        allOf(withId(R.id.signUpButton), hasSibling(logInButton))
+    // Child IDs repeat inside every Input, so each child is scoped to its parent input.
+    val userNameEditText: Matcher<View> =
+        allOf(withId(DesignR.id.inputEditText), isDescendantOfA(userNameInput))
+    val passwordEditText: Matcher<View> =
+        allOf(withId(DesignR.id.inputEditText), isDescendantOfA(passwordInput))
+    val userNameError: Matcher<View> =
+        allOf(withId(DesignR.id.descriptionTextView), isDescendantOfA(userNameInput))
+    val passwordError: Matcher<View> =
+        allOf(withId(DesignR.id.descriptionTextView), isDescendantOfA(passwordInput))
 
-    private val shownError: Matcher<View> = allOf(isDisplayed(), withText(not(equalTo(""))))
+    val logInButton: Matcher<View> = withId(R.id.logInButton)
 
-    fun waitUntilDisplayed() {
-        userNameInput.waitUntilDisplayed()
-        passwordInput.waitUntilDisplayed()
-        logInButton.waitUntilDisplayed()
-        signUpButton.waitUntilDisplayed()
-    }
-
-    fun enterUserName(userName: String) {
-        userNameEditText.waitUntilDisplayed().perform(replaceText(userName), closeSoftKeyboard())
-    }
-
-    fun enterPassword(password: String) {
-        passwordEditText.waitUntilDisplayed().perform(replaceText(password), closeSoftKeyboard())
-    }
-
-    fun tapLogIn() {
-        logInButton.waitUntilDisplayed().perform(click())
-    }
-
-    fun tapSignUp() {
-        signUpButton.waitUntilDisplayed().perform(click())
-    }
-
-    fun waitForUserNameError() {
-        userNameDescription.waitUntil(shownError)
-    }
-
-    fun waitForPasswordError() {
-        passwordDescription.waitUntil(shownError)
-    }
-    private fun childOf(input: Matcher<View>, childId: Int): Matcher<View> =
-        allOf(withId(childId), isDescendantOfA(input))
+    // signUpButton also exists on the registration screen, so scope it to the login layout.
+    val signUpButton: Matcher<View> = allOf(withId(R.id.signUpButton), hasSibling(logInButton))
 }
